@@ -14,12 +14,12 @@ jobs:
       - name: set `refs/tags` to the TAG
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         run: |
-          echo '::set-env name=TAG::${GITHUB_REF#refs/tags/}'
+          echo ::set-env name=TAG::${GITHUB_REF#refs/tags/}
 
       - name: set `latest` to the TAG
         if: contains(github.ref, 'refs/tags/') != true
         run: |
-          echo '::set-env name=TAG::latest'
+          echo ::set-env name=TAG::latest
 
       - name: print env
         run: |
