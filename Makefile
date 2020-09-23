@@ -29,3 +29,11 @@ ifndef DOCKER_PASSWORD
 	))
 endif
 
+.PHONY: gha.docker-push
+gha.docker-push: docker.init-password
+	@which act > /dev/null 2>&1 || brew install nektos/tap/act
+	@act \
+		--platform=ubuntu-latest=nektos/act-environments-ubuntu:18.04 \
+		--job=docker-push \
+		--bind \
+		-s DOCKER_PASSWORD=$(DOCKER_PASSWORD)

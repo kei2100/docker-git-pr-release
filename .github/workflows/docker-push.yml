@@ -1,0 +1,38 @@
+name: docker-push
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+jobs:
+  docker-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: set `refs/tags` to the TAG
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        run: |
+          echo '::set-env name=TAG::${GITHUB_REF#refs/tags/}'
+
+      - name: set `latest` to the TAG
+        if: contains(github.ref, 'refs/tags/') != true
+        run: |
+          echo '::set-env name=TAG::latest'
+
+      - name: print env
+        run: |
+          env
+
+      - name: checkout
+        if: github.actor != 'nektos/act'
+        uses: actions/checkout@v2
+
+      - name: docker build and push
+        env:
+          TAG: ${{ env.TAG }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          make docker.push
+
