@@ -29,10 +29,15 @@ jobs:
         if: github.actor != 'nektos/act'
         uses: actions/checkout@v2
 
+      - name: docker login
+        uses: docker/login-action@v1
+        with:
+          username: kei2100
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: docker build and push
         env:
           TAG: ${{ env.TAG }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           make docker.push
 
