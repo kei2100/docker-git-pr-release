@@ -19,12 +19,15 @@ ifndef TAG
 	))
 endif
 
+ACT_PLATFORM = ubuntu-latest=nektos/act-environments-ubuntu:18.04
+ACT_JOB = docker-push
+
 .PHONY: gha.docker-push
 gha.docker-push: gha.init-docker_password
 	@which act > /dev/null 2>&1 || brew install nektos/tap/act
 	@act \
-		--platform=ubuntu-latest=nektos/act-environments-ubuntu:18.04 \
-		--job=docker-push \
+		--platform=$(ACT_PLATFORM) \
+		--job=$(ACT_JOB) \
 		--bind \
 		-s DOCKER_PASSWORD=$(DOCKER_PASSWORD)
 
