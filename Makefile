@@ -8,7 +8,7 @@ docker.build: docker.init-tag
 
 .PHONY: docker.push
 docker.push: docker.build
-	docker push kei2100/git-pr-release:$(TAG)
+	docker push kei2100/$(IMAGE):$(TAG)
 
 .PHONY: docker.init-tag
 docker.init-tag:
