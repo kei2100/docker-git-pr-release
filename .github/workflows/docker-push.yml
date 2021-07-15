@@ -39,4 +39,4 @@ jobs:
         env:
           TAG: ${{ env.TAG }}
         run: |
-          echo 'make docker.push'
+          make docker.push
