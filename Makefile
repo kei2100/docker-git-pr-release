@@ -1,5 +1,4 @@
 IMAGE = kei2100/git-pr-release
-DOCKER_USERNAME = kei2100
 
 .PHONY: docker.build
 docker.build: docker.init-tag
@@ -8,7 +7,7 @@ docker.build: docker.init-tag
 
 .PHONY: docker.push
 docker.push: docker.build
-	docker push kei2100/$(IMAGE):$(TAG)
+	docker push $(IMAGE):$(TAG)
 
 .PHONY: docker.init-tag
 docker.init-tag:
